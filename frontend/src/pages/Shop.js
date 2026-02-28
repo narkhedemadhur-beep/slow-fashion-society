@@ -63,12 +63,6 @@ export const Shop = () => {
     }
   };
 
-  useEffect(() => {
-    if (priceSort) {
-      fetchProducts();
-    }
-  }, [priceSort]);
-
   return (
     <div className="min-h-screen py-12">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
