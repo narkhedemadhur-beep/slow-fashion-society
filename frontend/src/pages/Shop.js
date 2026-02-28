@@ -25,15 +25,15 @@ export const Shop = () => {
   const [priceSort, setPriceSort] = useState('');
 
   useEffect(() => {
-    if (selectedCategory && selectedCategory !== 'all') {
-      setSelectedCategory(searchParams.get('category') || '');
-    }
-  }, [searchParams]);
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     fetchProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategory, search, priceSort]);
+
+  const fetchCategories = async () => {
     try {
       const response = await axios.get(`${API}/categories`);
       setCategories(response.data);
