@@ -44,7 +44,7 @@ export const Shop = () => {
   const fetchProducts = async () => {
     try {
       const params = {};
-      if (selectedCategory) params.category = selectedCategory;
+      if (selectedCategory && selectedCategory !== 'all') params.category = selectedCategory;
       if (search) params.search = search;
       
       const response = await axios.get(`${API}/products`, { params });
