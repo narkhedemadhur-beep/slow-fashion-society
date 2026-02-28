@@ -1,0 +1,134 @@
+{
+  "timestamp": "2026-02-28T12:29:43.020345",
+  "total_tests": 21,
+  "passed_tests": 21,
+  "success_rate": 1.0,
+  "test_results": [
+    {
+      "name": "User Signup",
+      "success": true,
+      "details": "User created with ID: user_dbce42afb1fd",
+      "response_data": null
+    },
+    {
+      "name": "User Login",
+      "success": true,
+      "details": "Logged in successfully",
+      "response_data": null
+    },
+    {
+      "name": "Get Current User",
+      "success": true,
+      "details": "",
+      "response_data": null
+    },
+    {
+      "name": "Get Categories",
+      "success": true,
+      "details": "Retrieved 6 categories",
+      "response_data": null
+    },
+    {
+      "name": "Get Products",
+      "success": true,
+      "details": "Retrieved 8 products",
+      "response_data": null
+    },
+    {
+      "name": "Get Featured Products",
+      "success": true,
+      "details": "Retrieved 6 featured products",
+      "response_data": null
+    },
+    {
+      "name": "Create Product",
+      "success": true,
+      "details": "Product created with ID: prod_349ff08e02f0",
+      "response_data": null
+    },
+    {
+      "name": "Get Single Product",
+      "success": true,
+      "details": "",
+      "response_data": null
+    },
+    {
+      "name": "Add to Cart",
+      "success": true,
+      "details": "",
+      "response_data": null
+    },
+    {
+      "name": "Get Cart",
+      "success": true,
+      "details": "Cart contains added product",
+      "response_data": null
+    },
+    {
+      "name": "Remove from Cart",
+      "success": true,
+      "details": "",
+      "response_data": null
+    },
+    {
+      "name": "Add to Wishlist",
+      "success": true,
+      "details": "",
+      "response_data": null
+    },
+    {
+      "name": "Get Wishlist",
+      "success": true,
+      "details": "Wishlist contains added product",
+      "response_data": null
+    },
+    {
+      "name": "Remove from Wishlist",
+      "success": true,
+      "details": "",
+      "response_data": null
+    },
+    {
+      "name": "Create Order",
+      "success": true,
+      "details": "Order created with ID: order_9d83dda76597",
+      "response_data": null
+    },
+    {
+      "name": "Get Orders",
+      "success": true,
+      "details": "Retrieved 1 orders",
+      "response_data": null
+    },
+    {
+      "name": "Create Review",
+      "success": true,
+      "details": "Review created with ID: review_fb92cb6eba54",
+      "response_data": null
+    },
+    {
+      "name": "Get Reviews",
+      "success": true,
+      "details": "Retrieved 1 reviews",
+      "response_data": null
+    },
+    {
+      "name": "Submit Feedback",
+      "success": true,
+      "details": "",
+      "response_data": null
+    },
+    {
+      "name": "Newsletter Subscription",
+      "success": true,
+      "details": "",
+      "response_data": null
+    },
+    {
+      "name": "Get All Feedback (Admin)",
+      "success": true,
+      "details": "Retrieved 1 feedback items",
+      "response_data": null
+    }
+  ]
+}
