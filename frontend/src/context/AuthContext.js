@@ -19,14 +19,22 @@ export const AuthProvider = ({ children }) => {
 
     try {
       const token = localStorage.getItem('token');
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+      
       const response = await axios.get(`${API}/auth/me`, {
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        headers: { Authorization: `Bearer ${token}` },
         withCredentials: true
       });
       setUser(response.data);
     } catch (error) {
-      setUser(null);
-      localStorage.removeItem('token');
+      // Only clear if it's an auth error, not network error
+      if (error.response?.status === 401) {
+        setUser(null);
+        localStorage.removeItem('token');
+      }
     } finally {
       setLoading(false);
     }
