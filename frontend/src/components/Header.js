@@ -31,12 +31,20 @@ export const Header = () => {
             <Link to="/new-arrivals" data-testid="nav-new-arrivals" className="text-sm font-medium hover:text-primary transition-colors">
               New Arrivals
             </Link>
+            <Link to="/gen-z" data-testid="nav-genz" className="text-sm font-medium hover:text-primary transition-colors">
+              Gen Z
+            </Link>
             <Link to="/about" data-testid="nav-about" className="text-sm font-medium hover:text-primary transition-colors">
               About
             </Link>
             <Link to="/support" data-testid="nav-support" className="text-sm font-medium hover:text-primary transition-colors">
               Support
             </Link>
+            {user && (
+              <Link to="/admin" data-testid="nav-admin" className="text-sm font-medium hover:text-primary transition-colors">
+                Admin
+              </Link>
+            )}
           </nav>
 
           {/* Icons */}
