@@ -85,6 +85,9 @@ export const Header = () => {
               <Link to="/new-arrivals" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium hover:text-primary transition-colors">
                 New Arrivals
               </Link>
+              <Link to="/gen-z" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium hover:text-primary transition-colors">
+                Gen Z
+              </Link>
               <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium hover:text-primary transition-colors">
                 About
               </Link>
@@ -98,6 +101,9 @@ export const Header = () => {
                   </Link>
                   <Link to="/orders" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium hover:text-primary transition-colors">
                     My Orders
+                  </Link>
+                  <Link to="/admin" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium hover:text-primary transition-colors">
+                    Admin
                   </Link>
                   <button onClick={handleLogout} data-testid="logout-button" className="text-sm font-medium hover:text-primary transition-colors text-left">
                     Logout
