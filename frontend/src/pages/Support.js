@@ -22,19 +22,6 @@ export const Support = () => {
               </div>
             </div>
           </div>
-
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-border/50">
-            <div className="flex gap-4 items-start">
-              <MessageCircle className="h-6 w-6 text-primary mt-1" />
-              <div>
-                <h2 className="font-heading text-xl font-medium mb-2">Live Chat</h2>
-                <p className="text-muted-foreground mb-2">Available Monday - Friday, 9AM - 6PM EST</p>
-                <button data-testid="chat-button" className="text-primary hover:underline">
-                  Start Chat
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* FAQs */}
