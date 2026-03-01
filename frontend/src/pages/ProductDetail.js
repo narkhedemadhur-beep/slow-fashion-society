@@ -226,18 +226,27 @@ export const ProductDetail = () => {
               <div className="space-y-4">
                 <div>
                   <label className="text-sm font-medium mb-2 block">Rating</label>
-                  <Select value={rating.toString()} onValueChange={(val) => setRating(parseInt(val))}>
-                    <SelectTrigger data-testid="rating-select">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {[5, 4, 3, 2, 1].map((r) => (
-                        <SelectItem key={r} value={r.toString()}>
-                          {r} Stars
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <div className="flex gap-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => setRating(star)}
+                        onMouseEnter={() => setHoverRating(star)}
+                        onMouseLeave={() => setHoverRating(0)}
+                        data-testid={`star-${star}`}
+                        className="transition-transform hover:scale-125"
+                      >
+                        <Star
+                          className={`h-8 w-8 ${
+                            star <= (hoverRating || rating)
+                              ? 'fill-primary text-primary'
+                              : 'text-gray-300'
+                          }`}
+                        />
+                      </button>
+                    ))}
+                  </div>
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-2 block">Comment</label>
