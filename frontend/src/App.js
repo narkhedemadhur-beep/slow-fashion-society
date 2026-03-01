@@ -25,6 +25,8 @@ import { Socials } from './pages/Socials';
 import { Feedback } from './pages/Feedback';
 import { NewArrivals } from './pages/NewArrivals';
 import { Admin } from './pages/Admin';
+import { GenZ } from './pages/GenZ';
+import { Terms } from './pages/Terms';
 
 import '@/App.css';
 
