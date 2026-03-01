@@ -51,7 +51,7 @@ export const NewArrivals = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
           {products.map((product) => (
             <div
               key={product.product_id}
