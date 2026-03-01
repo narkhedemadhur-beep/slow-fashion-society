@@ -263,17 +263,6 @@ export const Admin = () => {
                       />
                     </div>
                     <div>
-                      <Label>Condition</Label>
-                      <Select value={productForm.condition} onValueChange={(val) => setProductForm({...productForm, condition: val})}>
-                        <SelectTrigger data-testid="product-condition-select">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Excellent">Excellent</SelectItem>
-                          <SelectItem value="Good">Good</SelectItem>
-                          <SelectItem value="Fair">Fair</SelectItem>
-                        </SelectContent>
-                      </Select>
                     </div>
                     <div className="flex items-center gap-2">
                       <input
