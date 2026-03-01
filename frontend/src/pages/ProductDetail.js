@@ -186,7 +186,6 @@ export const ProductDetail = () => {
             </p>
 
             <div className="space-y-2">
-              <p className="text-sm font-medium">Condition: <span className="text-primary">{product.condition}</span></p>
               <p className="text-sm font-medium">Available sizes: {product.sizes.join(', ')}</p>
               <p className="text-sm font-medium">Stock: {product.stock > 0 ? 'In Stock' : 'Out of Stock'}</p>
             </div>
