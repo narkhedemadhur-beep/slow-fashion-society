@@ -62,6 +62,8 @@ function AppRouter() {
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/new-arrivals" element={<NewArrivals />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/gen-z" element={<GenZ />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
       {!hideHeaderFooter && <Footer />}
       <MobileNav />
