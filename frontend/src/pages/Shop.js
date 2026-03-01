@@ -133,7 +133,7 @@ export const Shop = () => {
                   </div>
                   <div className="text-center space-y-2">
                     <h3 className="font-body text-base font-medium">{product.name}</h3>
-                    <p className="text-primary font-semibold">${product.price.toFixed(2)}</p>
+                    <p className="text-primary font-semibold">₹{product.price.toFixed(2)}</p>
                     <p className="text-xs text-muted-foreground">{product.condition}</p>
                   </div>
                 </div>

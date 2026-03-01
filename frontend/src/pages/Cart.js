@@ -120,7 +120,7 @@ export const Cart = () => {
                       <p className="text-sm text-muted-foreground mb-2">
                         {product.category} • {product.condition}
                       </p>
-                      <p className="text-primary font-semibold">${product.price.toFixed(2)}</p>
+                      <p className="text-primary font-semibold">₹{product.price.toFixed(2)}</p>
                     </div>
                     <button
                       onClick={() => handleRemove(item.product_id)}

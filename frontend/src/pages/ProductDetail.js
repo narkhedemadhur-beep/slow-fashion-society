@@ -157,7 +157,7 @@ export const ProductDetail = () => {
                 {product.name}
               </h1>
               <p className="text-3xl font-semibold text-primary" data-testid="product-price">
-                ${product.price.toFixed(2)}
+                ₹{product.price.toFixed(2)}
               </p>
             </div>
 

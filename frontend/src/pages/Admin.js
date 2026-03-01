@@ -299,7 +299,7 @@ export const Admin = () => {
                   <img src={product.images[0]} alt={product.name} className="w-full h-48 object-cover rounded-lg mb-3" />
                   <h3 className="font-medium mb-1">{product.name}</h3>
                   <p className="text-sm text-muted-foreground mb-2">{product.category}</p>
-                  <p className="text-primary font-semibold mb-3">${product.price.toFixed(2)}</p>
+                  <p className="text-primary font-semibold mb-3">₹{product.price.toFixed(2)}</p>
                   <div className="flex gap-2">
                     <Button
                       size="sm"

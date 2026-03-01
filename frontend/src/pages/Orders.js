@@ -90,7 +90,7 @@ export const Orders = () => {
                       <div className="flex-1">
                         <p className="font-medium">{item.name}</p>
                         <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
-                        <p className="text-sm text-primary font-semibold">${item.price.toFixed(2)}</p>
+                        <p className="text-sm text-primary font-semibold">₹{item.price.toFixed(2)}</p>
                       </div>
                     </div>
                   ))}
