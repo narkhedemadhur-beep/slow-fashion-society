@@ -24,6 +24,7 @@ export const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(5);
+  const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(true);
 
