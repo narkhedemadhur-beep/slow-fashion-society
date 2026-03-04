@@ -8,6 +8,7 @@ const API = `${BACKEND_URL}/api`;
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [lastActivity, setLastActivity] = useState(Date.now());
 
   const checkAuth = useCallback(async () => {
     // CRITICAL: If returning from OAuth callback, skip the /me check.
@@ -43,6 +44,37 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  // Auto logout after 30 minutes of inactivity
+  useEffect(() => {
+    if (!user) return;
+
+    const handleActivity = () => setLastActivity(Date.now());
+    
+    // Track user activity
+    window.addEventListener('mousemove', handleActivity);
+    window.addEventListener('keypress', handleActivity);
+    window.addEventListener('click', handleActivity);
+    window.addEventListener('scroll', handleActivity);
+
+    // Check for inactivity every minute
+    const interval = setInterval(() => {
+      const inactiveTime = Date.now() - lastActivity;
+      const thirtyMinutes = 30 * 60 * 1000;
+      
+      if (inactiveTime > thirtyMinutes) {
+        logout();
+      }
+    }, 60000); // Check every minute
+
+    return () => {
+      window.removeEventListener('mousemove', handleActivity);
+      window.removeEventListener('keypress', handleActivity);
+      window.removeEventListener('click', handleActivity);
+      window.removeEventListener('scroll', handleActivity);
+      clearInterval(interval);
+    };
+  }, [user, lastActivity]);
 
   const login = (token, userData) => {
     localStorage.setItem('token', token);

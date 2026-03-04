@@ -242,13 +242,13 @@ export const ProductDetail = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Comment</label>
+                  <label className="text-sm font-medium mb-2 block">Comment (Optional)</label>
                   <Textarea
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                     data-testid="review-comment-input"
-                    required
                     rows={4}
+                    placeholder="Share your thoughts about this product..."
                   />
                 </div>
                 <Button type="submit" data-testid="submit-review-button" className="rounded-full">

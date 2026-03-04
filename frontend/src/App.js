@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { Header } from './components/Header';
@@ -27,11 +27,17 @@ import { NewArrivals } from './pages/NewArrivals';
 import { Admin } from './pages/Admin';
 import { GenZ } from './pages/GenZ';
 import { Terms } from './pages/Terms';
+import { CategoryPage } from './pages/CategoryPage';
 
 import '@/App.css';
 
 function AppRouter() {
   const location = useLocation();
+  
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   
   // Check URL fragment for session_id synchronously during render
   if (location.hash?.includes('session_id=')) {
@@ -64,6 +70,7 @@ function AppRouter() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/gen-z" element={<GenZ />} />
         <Route path="/terms" element={<Terms />} />
+        <Route path="/category/:slug" element={<CategoryPage />} />
       </Routes>
       {!hideHeaderFooter && <Footer />}
       <MobileNav />

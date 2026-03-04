@@ -124,7 +124,7 @@ export const Shop = () => {
                 data-testid={`product-${product.product_id}`}
               >
                 <div className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-                  <div className="aspect-[3/4] relative overflow-hidden rounded-lg mb-6">
+                  <div className="aspect-square relative overflow-hidden rounded-lg mb-6">
                     <img
                       src={product.images[0]}
                       alt={product.name}

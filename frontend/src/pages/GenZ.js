@@ -10,22 +10,26 @@ export const GenZ = () => {
     {
       icon: <Sparkles className="h-8 w-8" />,
       title: "Vintage Vibes",
-      description: "Curated Y2K and 90s pieces that define your aesthetic"
+      description: "Curated Y2K and 90s pieces that define your aesthetic",
+      link: "/category/vintage-vibes"
     },
     {
       icon: <TrendingUp className="h-8 w-8" />,
       title: "Trending Now",
-      description: "What's hot in sustainable fashion right now"
+      description: "What's hot in sustainable fashion right now",
+      link: "/category/trending-now"
     },
     {
       icon: <Users className="h-8 w-8" />,
       title: "Community First",
-      description: "Join thousands styling their way to sustainability"
+      description: "Join thousands styling their way to sustainability",
+      link: "/category/community-first"
     },
     {
       icon: <Zap className="h-8 w-8" />,
       title: "Fast Drops",
-      description: "New drops every week. Blink and you'll miss it"
+      description: "New drops every week. Blink and you'll miss it",
+      link: "/category/fast-drops"
     }
   ];
 
@@ -55,7 +59,7 @@ export const GenZ = () => {
             Thrift smarter. Style bolder. Be iconic.
           </p>
           <Button 
-            onClick={() => navigate('/shop')} 
+            onClick={() => navigate('/category/gen-z')} 
             data-testid="genz-shop-button"
             className="rounded-full bg-white text-purple-600 hover:bg-white/90 px-10 py-6 text-lg font-bold transition-all shadow-2xl hover:shadow-3xl hover:scale-105 transform"
           >
@@ -79,7 +83,8 @@ export const GenZ = () => {
             {trends.map((trend, idx) => (
               <div
                 key={idx}
-                className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-purple-300"
+                onClick={() => navigate(trend.link)}
+                className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-purple-300 cursor-pointer"
                 data-testid={`trend-card-${idx}`}
               >
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">

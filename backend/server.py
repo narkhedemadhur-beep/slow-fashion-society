@@ -146,7 +146,7 @@ class Review(BaseModel):
 class ReviewCreate(BaseModel):
     product_id: str
     rating: int
-    comment: str
+    comment: str = ""
 
 class Feedback(BaseModel):
     model_config = ConfigDict(extra="ignore")

@@ -19,7 +19,11 @@ export const Header = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="font-heading text-2xl md:text-3xl font-light tracking-tight text-primary">
+          <Link 
+            to="/" 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="font-heading text-2xl md:text-3xl font-light tracking-tight text-primary"
+          >
             Slow Fashion Society
           </Link>
 
