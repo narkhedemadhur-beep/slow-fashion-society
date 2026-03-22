@@ -16,14 +16,18 @@ export const ProductDetail = () => {
   const { user } = useAuth();
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(true);
+  const [selectedSize, setSelectedSize] = useState('');
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     fetchProduct();
     fetchReviews();
+    fetchRelatedProducts();
   }, [id]);
 
   const fetchProduct = async () => {
@@ -47,6 +51,15 @@ export const ProductDetail = () => {
     }
   };
 
+  const fetchRelatedProducts = async () => {
+    try {
+      const response = await axios.get(`${API}/products/${id}/related`);
+      setRelatedProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching related products:', error);
+    }
+  };
+
   const handleAddToCart = async () => {
     if (!user) {
       toast.error('Please login to add items to cart');
@@ -54,11 +67,21 @@ export const ProductDetail = () => {
       return;
     }
 
+    if (product.sizes.length > 0 && !selectedSize) {
+      toast.error('Please select a size');
+      return;
+    }
+
+    if (quantity > product.stock) {
+      toast.error('Quantity exceeds available stock');
+      return;
+    }
+
     try {
       const token = localStorage.getItem('token');
       await axios.post(
         `${API}/cart/add`,
-        { product_id: product.product_id, quantity: 1 },
+        { product_id: product.product_id, quantity, size: selectedSize },
         { 
           headers: token ? { Authorization: `Bearer ${token}` } : {},
           withCredentials: true 
@@ -179,9 +202,58 @@ export const ProductDetail = () => {
               {product.description}
             </p>
 
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Available sizes: {product.sizes.join(', ')}</p>
-              <p className="text-sm font-medium">Stock: {product.stock > 0 ? 'In Stock' : 'Out of Stock'}</p>
+            <div className="space-y-4">
+              {/* Size Selection */}
+              {product.sizes.length > 0 && (
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Select Size</label>
+                  <div className="flex gap-2">
+                    {product.sizes.map((size) => (
+                      <button
+                        key={size}
+                        onClick={() => setSelectedSize(size)}
+                        data-testid={`size-${size}`}
+                        className={`px-4 py-2 border rounded-lg transition-colors ${
+                          selectedSize === size
+                            ? 'bg-primary text-white border-primary'
+                            : 'border-gray-300 hover:border-primary'
+                        }`}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Quantity Selection */}
+              <div>
+                <label className="text-sm font-medium mb-2 block">Quantity</label>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    data-testid="decrease-quantity"
+                    className="w-10 h-10 rounded-full border border-gray-300 hover:border-primary flex items-center justify-center text-xl font-medium"
+                    disabled={quantity <= 1}
+                  >
+                    −
+                  </button>
+                  <span className="text-xl font-medium w-12 text-center" data-testid="quantity-display">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
+                    data-testid="increase-quantity"
+                    className="w-10 h-10 rounded-full border border-gray-300 hover:border-primary flex items-center justify-center text-xl font-medium"
+                    disabled={quantity >= product.stock}
+                  >
+                    +
+                  </button>
+                  <span className="text-sm text-muted-foreground ml-2">
+                    ({product.stock} available)
+                  </span>
+                </div>
+              </div>
             </div>
 
             <div className="flex gap-4">
@@ -284,6 +356,42 @@ export const ProductDetail = () => {
             )}
           </div>
         </div>
+
+        {/* Related Products */}
+        {relatedProducts.length > 0 && (
+          <div className="border-t border-border pt-12 mt-12">
+            <h2 className="font-heading text-3xl font-medium tracking-tight mb-8" data-testid="related-products-title">
+              You May Also Like
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+              {relatedProducts.map((relProduct) => (
+                <div
+                  key={relProduct.product_id}
+                  className="group cursor-pointer"
+                  onClick={() => {
+                    navigate(`/product/${relProduct.product_id}`);
+                    window.scrollTo(0, 0);
+                  }}
+                  data-testid={`related-product-${relProduct.product_id}`}
+                >
+                  <div className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="aspect-square relative overflow-hidden rounded-lg mb-4">
+                      <img
+                        src={relProduct.images[0]}
+                        alt={relProduct.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="text-center space-y-2">
+                      <h3 className="font-body text-sm font-medium">{relProduct.name}</h3>
+                      <p className="text-primary font-semibold">₹{relProduct.price.toFixed(2)}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

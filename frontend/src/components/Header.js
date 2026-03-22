@@ -44,7 +44,7 @@ export const Header = () => {
             <Link to="/support" data-testid="nav-support" className="text-sm font-medium hover:text-primary transition-colors">
               Support
             </Link>
-            {user && (
+            {user && user.role === 'admin' && (
               <Link to="/admin" data-testid="nav-admin" className="text-sm font-medium hover:text-primary transition-colors">
                 Admin
               </Link>
@@ -106,9 +106,11 @@ export const Header = () => {
                   <Link to="/orders" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium hover:text-primary transition-colors">
                     My Orders
                   </Link>
-                  <Link to="/admin" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium hover:text-primary transition-colors">
-                    Admin
-                  </Link>
+                  {user.role === 'admin' && (
+                    <Link to="/admin" onClick={() => setMobileMenuOpen(false)} className="text-sm font-medium hover:text-primary transition-colors">
+                      Admin
+                    </Link>
+                  )}
                   <button onClick={handleLogout} data-testid="logout-button" className="text-sm font-medium hover:text-primary transition-colors text-left">
                     Logout
                   </button>

@@ -260,6 +260,10 @@ export const Checkout = () => {
                   <RadioGroupItem value="stripe" id="stripe" data-testid="payment-stripe" />
                   <Label htmlFor="stripe" className="cursor-pointer">Credit/Debit Card (Stripe)</Label>
                 </div>
+                <div className="flex items-center space-x-2 mb-4">
+                  <RadioGroupItem value="upi" id="upi" data-testid="payment-upi" />
+                  <Label htmlFor="upi" className="cursor-pointer">UPI Payment</Label>
+                </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="cod" id="cod" data-testid="payment-cod" />
                   <Label htmlFor="cod" className="cursor-pointer">Cash on Delivery</Label>

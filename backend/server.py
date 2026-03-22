@@ -45,6 +45,7 @@ class User(BaseModel):
     email: str
     name: str
     picture: Optional[str] = None
+    role: str = "user"
     created_at: datetime
 
 class UserSignup(BaseModel):
@@ -266,24 +267,30 @@ async def signup(user_data: UserSignup):
     user_id = f"user_{uuid.uuid4().hex[:12]}"
     hashed_pwd = hash_password(user_data.password)
     
+    # Check if email is admin
+    admin_emails = os.environ.get('ADMIN_EMAILS', '').lower().split(',')
+    role = "admin" if user_data.email.lower() in admin_emails else "user"
+    
     user_doc = {
         "user_id": user_id,
         "email": user_data.email,
         "name": user_data.name,
         "password": hashed_pwd,
         "picture": None,
+        "role": role,
         "created_at": datetime.now(timezone.utc).isoformat()
     }
     
     await db.users.insert_one(user_doc)
     
-    token = create_jwt_token({"user_id": user_id, "email": user_data.email})
+    token = create_jwt_token({"user_id": user_id, "email": user_data.email, "role": role})
     
     return {"token": token, "user": {
         "user_id": user_id,
         "email": user_data.email,
         "name": user_data.name,
-        "picture": None
+        "picture": None,
+        "role": role
     }}
 
 @api_router.post("/auth/login")
@@ -295,13 +302,22 @@ async def login(credentials: UserLogin):
     if not verify_password(credentials.password, user_doc.get("password", "")):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     
-    token = create_jwt_token({"user_id": user_doc["user_id"], "email": user_doc["email"]})
+    # Check if email should be admin
+    admin_emails = os.environ.get('ADMIN_EMAILS', '').lower().split(',')
+    role = "admin" if credentials.email.lower() in admin_emails else user_doc.get("role", "user")
+    
+    # Update role if needed
+    if role != user_doc.get("role"):
+        await db.users.update_one({"user_id": user_doc["user_id"]}, {"$set": {"role": role}})
+    
+    token = create_jwt_token({"user_id": user_doc["user_id"], "email": user_doc["email"], "role": role})
     
     return {"token": token, "user": {
         "user_id": user_doc["user_id"],
         "email": user_doc["email"],
         "name": user_doc["name"],
-        "picture": user_doc.get("picture")
+        "picture": user_doc.get("picture"),
+        "role": role
     }}
 
 @api_router.post("/auth/session")
@@ -331,12 +347,16 @@ async def create_session(session_data: SessionData, response: Response):
     # Check if user exists
     user_doc = await db.users.find_one({"email": email}, {"_id": 0})
     
+    # Check if email should be admin
+    admin_emails = os.environ.get('ADMIN_EMAILS', '').lower().split(',')
+    role = "admin" if email.lower() in admin_emails else "user"
+    
     if user_doc:
         user_id = user_doc["user_id"]
-        # Update user info
+        # Update user info and role
         await db.users.update_one(
             {"user_id": user_id},
-            {"$set": {"name": name, "picture": picture}}
+            {"$set": {"name": name, "picture": picture, "role": role}}
         )
     else:
         user_id = f"user_{uuid.uuid4().hex[:12]}"
@@ -345,6 +365,7 @@ async def create_session(session_data: SessionData, response: Response):
             "email": email,
             "name": name,
             "picture": picture,
+            "role": role,
             "created_at": datetime.now(timezone.utc).isoformat()
         }
         await db.users.insert_one(user_doc)
@@ -373,7 +394,8 @@ async def create_session(session_data: SessionData, response: Response):
         "user_id": user_id,
         "email": email,
         "name": name,
-        "picture": picture
+        "picture": picture,
+        "role": role
     }}
 
 @api_router.get("/auth/me")
@@ -438,6 +460,25 @@ async def get_product(product_id: str):
         product['created_at'] = datetime.fromisoformat(product['created_at'])
     
     return Product(**product)
+
+@api_router.get("/products/{product_id}/related", response_model=List[Product])
+async def get_related_products(product_id: str):
+    """Get related products by category"""
+    product = await db.products.find_one({"product_id": product_id}, {"_id": 0})
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    
+    # Find related products in same category
+    related = await db.products.find(
+        {"category": product["category"], "product_id": {"$ne": product_id}},
+        {"_id": 0}
+    ).limit(4).to_list(4)
+    
+    for p in related:
+        if isinstance(p.get('created_at'), str):
+            p['created_at'] = datetime.fromisoformat(p['created_at'])
+    
+    return [Product(**p) for p in related]
 
 @api_router.post("/products", response_model=Product)
 async def create_product(product_data: ProductCreate, request: Request, authorization: Optional[str] = Header(None)):
